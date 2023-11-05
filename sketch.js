@@ -1,20 +1,20 @@
-let num = 200; // 圆的数量
-let vecLocation = []; // 圆的中心的位置向量
-let vecVelocity = []; // 圆的速度向量
+let num = 200; // Number of circles
+let vecLocation = []; // Vector for the center location of the circles
+let vecVelocity = []; // Vector for the velocity of the circles
 let R = [];
 let G = [];
 let B = [];
 let t;
 let mountainHeights = [];
 let c1, c2;
-let noiseDetailVal = 1; // 增加噪音细节水平
+let noiseDetailVal = 1; // Increase noise detail level
 var a = 0.0, x, y, n, step = 3;
 
 //individual: user input
 let isDay = true;
-let shines = [];
-let castleDrag = false;
-let castleXOffset = 0;
+let shines = [];// Array for the shines (stars)
+let castleDrag = false;// Whether the castle is being dragged
+let castleXOffset = 0; // X offset for the castle when dragging
 
 function setup() {
   createCanvas(900, 630);
@@ -46,8 +46,9 @@ for (y = 0; y < height / 2; y += step) {
   for (x = 0; x < width; x += step) {
   n = noise(x / 100., y / 25., t);
   if (n > 0.99) {
-  fill('#c96902');
+  fill('#c96902');// Color of the clouds
   } else {
+// Adjust the transparency range
   fill(interpColor.levels[0], interpColor.levels[1], interpColor.levels[2], n * map(y, 0, height / 2, 255, 50)); // 调整了透明度范围
   }
   rect(x, y, step, step);
@@ -80,16 +81,16 @@ pop();
 function river(){
   for (let i = 0; i < num; i++) {
       fill(R[i], G[i], B[i]);
-      vecLocation[i].add(vecVelocity[i]); // 更新圆的坐标
-      ellipse(vecLocation[i].x, vecLocation[i].y, 30, 2); // 在指定位置画圆
+      vecLocation[i].add(vecVelocity[i]); // Update the coordinates of the circle
+      ellipse(vecLocation[i].x, vecLocation[i].y, 30, 2); // Draw a circle at the specified location
      
       if (vecLocation[i].x < 0 || vecLocation[i].x > width) {
-      vecVelocity[i].x *= -1; // X方向的速度反转 // 在这里添加新的颜色变换逻辑
+      vecVelocity[i].x *= -1; // Reverse the velocity in the X direction // add new color transformation logic
       if (vecLocation[i].x < 0) {
       if (
       abs(vecLocation[i].y) < height/2+height/2 / 4
       ) {
-      // 新颜色，例如浅黄
+      // light yellow
       R[i] = 224;
       G[i] = 210;
       B[i] = 201;
@@ -107,7 +108,7 @@ function river(){
       G[i] = 99;
       B[i] = 17;
       }else{
-      //深蓝
+      //dark blue
       R[i] = 86;
       G[i] = 107;
       B[i] = 155;
@@ -116,26 +117,23 @@ function river(){
       if (
       abs(vecLocation[i].y) < height/2+height/2 / 4
       ) {
-      // 新颜色，例如棕秀色
+      // brownish tan
       R[i] = 177;
       G[i] = 121;
       B[i] = 64;
       } else if (
       abs(vecLocation[i].y) < height/2+height/2*2 / 4
       ){
-      //卡蒂萨克
       R[i] = 83;
       G[i] = 106;
       B[i] = 155;
       } else if (
       abs(vecLocation[i].y) < height/2+height/2*3 / 4
       ){
-      //下方量橘红
       R[i] = 225;
       G[i] = 82;
       B[i] = 47;
       }else{
-      //下方紫色较亮
       R[i] = 99;
       G[i] = 44;
       B[i] = 159;
